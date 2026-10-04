@@ -1,0 +1,86 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #ffe6e6;
+    min-height: 100vh;
+    min-height: 100dvh; /* Real viewport height on phones (toolbars, URL bar) */
+    padding: 20px 16px; /* Breathing room so the card never touches the edges */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden; /* Never clip sideways, but allow vertical scroll */
+    position: relative; /* Needed for positioning the heart container */
+  }
+  
+  .container {
+    background: #fff;
+    padding: clamp(16px, 5vw, 20px);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative; /* Stacked above the heart animation */
+    z-index: 2; /* Ensure the container is above the heart animation */
+    width: min(350px, 100%); /* Fluid: keeps the old 350px look, shrinks on phones */
+    height: auto; /* Height adjusts automatically based on content */
+  }
+  
+  .valentine-gif {
+    width: min(250px, 100%); /* Resized GIF to fit within the container */
+    height: auto; /* Maintain aspect ratio */
+    margin-bottom: 20px;
+    border-radius: 10px;
+  }
+  
+  h1 {
+    font-size: clamp(1.5rem, 7vw, 2rem);
+    color: #ff4d4d;
+    margin-bottom: 30px;
+    overflow-wrap: break-word; /* Long headings wrap instead of stretching the page */
+  }
+  
+  /* Heart Animation Container */
+  .heart-container {
+    position: fixed; /* Follows the viewport even if the page scrolls */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; /* Covers the screen without 100vw causing sideways overflow */
+    pointer-events: none; /* Ensure hearts don't interfere with clicks */
+    overflow: hidden;
+    z-index: 1; /* Place behind the main container */
+  }
+  
+  .heart {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* Horizontal spot is injected per heart by valentine.js */
+    --x: 50px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    animation: fall linear infinite;
+  }
+  
+  @keyframes fall {
+    0% {
+      /* --x centres each heart so none hang off the edge of the screen */
+      transform: translate(var(--x), -100vh); /* Start slightly above the screen */
+      opacity: 1;
+    }
+    100% {
+      transform: translate(var(--x), 100vh); /* End below the screen */
+      opacity: 0;
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .heart {
+      animation-duration: 20s; /* Slow the shower right down */
+    }
+  }

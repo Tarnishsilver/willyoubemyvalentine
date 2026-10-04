@@ -1,0 +1,106 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #ffe6e6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  min-height: 100dvh; /* Real viewport height on phones (toolbars, URL bar) */
+  padding: 20px 16px; /* Breathing room so the card never touches the edges */
+  text-align: center;
+  overflow-x: hidden; /* Never clip sideways, but allow vertical scroll */
+}
+
+.container {
+  background: #fff;
+  padding: clamp(20px, 6vw, 40px);
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative; /* Needed for positioning the "No" button */
+  width: min(500px, 100%); /* Fluid: keeps the old 500px look, shrinks on phones */
+}
+
+.valentine-gif {
+  width: min(200px, 50vw);
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+h1 {
+  font-size: clamp(1.4rem, 6vw, 2rem);
+  color: #ff4d4d;
+  margin-bottom: 30px;
+  overflow-wrap: break-word; /* Long headings wrap instead of stretching the page */
+}
+
+.buttons {
+  /* Must stay unpositioned: the "No" button is positioned against .container
+     (the white box), so anything positioned here would hijack that context */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 52px; /* Fixed row so the layout never jumps when "No" dodges */
+}
+
+button {
+  padding: 12px clamp(20px, 7vw, 30px);
+  min-height: 44px; /* Comfortable tap target on a phone */
+  font-size: 1rem;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  touch-action: manipulation; /* Kill the double-tap zoom delay on phones */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#yesButton {
+  background-color: #ff4d4d;
+  color: white;
+  /* Stays in the normal flow, centred by .buttons, so removing the "No"
+     button from the flow never shifts it */
+}
+
+#yesButton:hover,
+#yesButton:focus-visible {
+  transform: scale(1.1);
+  box-shadow: 0 6px 15px rgba(255, 77, 77, 0.5);
+}
+
+#noButton {
+  background-color: #cccccc;
+  color: black;
+  /* Taken out of flow so JS can move it anywhere inside the white box.
+     .container is the positioning context (it is position: relative),
+     and script.js sets the offsets relative to that box. */
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(0, 0);
+  transition: transform 0.2s ease;
+}
+
+/* Loading Container */
+.loading-container {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.loading-gif {
+  width: min(150px, 40vw);
+}
+
+.hidden {
+  display: none;
+}
